@@ -71,7 +71,7 @@ def main():
     if args.action == "train":
         trainer.train()
     elif args.action == "eval":
-        trainer.train()
+        trainer.evaluate()
 
     torch.save(model, OUTPUT_PATH)
 
