@@ -2,7 +2,8 @@ import os
 import urllib.request
 import conllu
 
-DATASET_DIR = "datasets"
+from globals import DATASET_DIR
+
 
 def load_conllu(filename):
   with open(filename, encoding="utf-8") as fp:
