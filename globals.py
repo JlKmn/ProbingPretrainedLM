@@ -16,5 +16,12 @@ label_vocab = collections.defaultdict(lambda: len(label_vocab))
 
 batch_size = 64
 EPOCHS = 1
-BATCHES_PER_EPOCH = 2
+BATCHES = 2
+EVAL_BATCHES = 2
+TEST_BATCHES = 2
 lr = 1e-2
+
+DBG_PRINT = False
+
+def debug_print(str):
+    print(str)

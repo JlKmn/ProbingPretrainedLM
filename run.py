@@ -1,18 +1,29 @@
 import os
+
+from torch import rand
 from models.nn.bertprobe import LinearProbeBert
 from models.nn.randomprobe import LinearProbeRandom
 from utils.dataset_loader import load
 from utils.tokenization import tokenize
 from utils.dataloader import data_loader
+from utils.test import test
 from globals import *
 from utils.train import fit
 
-def main():
+import fire
+
+def main(action = "test", epochs = 1, batches = 2, ebatches = 2, tbatches = 10):
+    global EPOCHS, BATCHES, EVAL_BATCHES, TEST_BATCHES
+    EPOCHS = epochs
+    BATCHES = batches 
+    EVAL_BATCHES = ebatches 
+    TEST_BATCHES = tbatches
     if not os.path.exists(OUT_DIR):
         os.mkdir(OUT_DIR)
     if not os.path.exists(DATASET_DIR):
         os.mkdir(DATASET_DIR)
-    output_path = f"{OUT_DIR}/probemodel"
+    bert_path = f"{OUT_DIR}/probemodel"
+    linear_path = f"{OUT_DIR}/linearmodel"
 
     train_sentences, train_labels = load(TRAIN_FILE)
     eval_sentences, eval_labels = load(EVAL_FILE)
@@ -29,17 +40,32 @@ def main():
     test_loader = data_loader(test_sentences_ids, test_tagging_ids)
 
     bert_model = None
-    if os.path.exists(output_path):
-        print("Loading model from disk")
-        bert_model = torch.load(output_path)
+    linear_model = None
+    if os.path.exists(bert_path):
+        print("Loading bert model from disk")
+        bert_model = torch.load(bert_path)
     else:
         bert_model = LinearProbeBert(len(label_vocab))
 
-    random_model = LinearProbeRandom(len(label_vocab))
-    fit(bert_model, EPOCHS, train_loader, eval_loader)
-    fit(random_model, EPOCHS, train_loader, eval_loader)
-    print("Saving model")
-    torch.save(bert_model, output_path)
+    if os.path.exists(linear_path):
+        print("Loading linear model from disk")
+        linear_model = torch.load(linear_path)
+    else:
+        linear_model = LinearProbeRandom(len(label_vocab))
+
+    if action == "train":
+        print("BERT")
+        fit(bert_model, EPOCHS, train_loader, eval_loader)
+        print("LINEAR")
+        fit(linear_model, EPOCHS, train_loader, eval_loader)
+        print("Saving model")
+        torch.save(bert_model, bert_path)
+        torch.save(linear_model, linear_path)
+    elif action == "test":
+        random_loss, random_accuracy = test(linear_model, test_loader)
+        print(f"Random Test: Loss {random_loss} Accuracy {random_accuracy}")
+        probe_loss, probe_accuracy = test(bert_model, test_loader)
+        print(f"Bert Test: Loss {probe_loss} Accuracy {probe_accuracy}")
 
 if __name__ == '__main__':
-    main()
+    fire.Fire(main)
