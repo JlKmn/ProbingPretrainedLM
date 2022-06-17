@@ -14,6 +14,7 @@ class LinearProbeRandom(nn.Module):
     return self.probe.parameters()
   
   def forward(self, sentences):
+    # Embedding layer needs no back propagation
     with torch.no_grad():
       word_rep = self.embedding(sentences)
     return self.probe(word_rep)

@@ -2,7 +2,7 @@ import os
 import urllib.request
 import conllu
 
-from globals import DATASET_DIR
+from globals import DATASET_DIR, debug_print
 
 
 def load_conllu(filename):
@@ -19,5 +19,5 @@ def load(filename):
         urllib.request.urlretrieve('https://raw.githubusercontent.com/UniversalDependencies/UD_English-EWT/master/' + filename, filePath)
 
     sentences, labels = load_conllu(filePath)
-    print(list(zip(sentences[0], labels[0])))
+    debug_print(list(zip(sentences[0], labels[0])))
     return sentences, labels

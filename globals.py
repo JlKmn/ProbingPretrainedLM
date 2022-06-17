@@ -24,4 +24,5 @@ lr = 1e-2
 DBG_PRINT = False
 
 def debug_print(str):
-    print(str)
+    if DBG_PRINT:
+        print(str)

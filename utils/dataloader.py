@@ -4,12 +4,17 @@ from models.dataset.postagging import PosTaggingDataset
 from globals import *
 
 def collate_fn(items):
+  # items = [(tensor([ 101, 7384, ...19,  100]), tensor([ 0,  1,  6, ..., 11,  0])), ...]
+  # max word length of sentences
   max_len = max(len(item[0]) for item in items)
 
+  # sentences = tensor([[0, 0, 0,  ..., 0, 0, 0],[...]...]
   sentences = torch.zeros((len(items), max_len), device=items[0][0].device).long().to(device)
+  # taggings = tensor([[0, 0, 0,  ..., 0, 0, 0]
   taggings = torch.zeros((len(items), max_len)).long().to(device)
 
   for i, (sentence, tagging) in enumerate(items):
+    # end of sentences contains tensor contains zeros if len < max_len
     sentences[i][0:len(sentence)] = sentence
     taggings[i][0:len(tagging)] = tagging
 

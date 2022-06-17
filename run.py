@@ -1,6 +1,5 @@
 import os
 
-from torch import rand
 from models.nn.bertprobe import LinearProbeBert
 from models.nn.randomprobe import LinearProbeRandom
 from utils.dataset_loader import load
@@ -12,7 +11,7 @@ from utils.train import fit
 
 import fire
 
-def main(action = "test", epochs = 1, batches = 2, ebatches = 2, tbatches = 10):
+def main(action = "train", epochs = 1, batches = 2, ebatches = 2, tbatches = 10):
     global EPOCHS, BATCHES, EVAL_BATCHES, TEST_BATCHES
     EPOCHS = epochs
     BATCHES = batches 
@@ -54,9 +53,9 @@ def main(action = "test", epochs = 1, batches = 2, ebatches = 2, tbatches = 10):
         linear_model = LinearProbeRandom(len(label_vocab))
 
     if action == "train":
-        print("BERT")
+        print("TRAINING BERT")
         fit(bert_model, EPOCHS, train_loader, eval_loader)
-        print("LINEAR")
+        print("TRAINING LINEAR")
         fit(linear_model, EPOCHS, train_loader, eval_loader)
         print("Saving model")
         torch.save(bert_model, bert_path)
