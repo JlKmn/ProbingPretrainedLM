@@ -66,5 +66,10 @@ def main(action = "train", epochs = 1, batches = 2, ebatches = 2, tbatches = 10)
         probe_loss, probe_accuracy = test(bert_model, test_loader)
         print(f"Bert Test: Loss {probe_loss} Accuracy {probe_accuracy}")
 
+# python .\run.py --action test --tbatches 100
+# Loading bert model from disk
+# Loading linear model from disk
+# Random Test: Loss 0.5167459845542908 Accuracy 0.5432551319648093
+# Bert Test: Loss 0.10409034043550491 Accuracy 0.8813559322033898
 if __name__ == '__main__':
     fire.Fire(main)
