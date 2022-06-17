@@ -13,11 +13,14 @@ def fit(model, epochs, train_loader, eval_loader):
     total_loss = num = 0
     for x, y in islice(train_loader, 0, BATCHES):
     #for x, y in train_loader:
-      optimizer.zero_grad() # start accumulating gradients
+      # set all gradients to zero
+      optimizer.zero_grad()
       y_scores = model(x)
       loss = criterion(y_scores.view(-1, len(label_vocab)), y.view(-1))
-      loss.backward() # compute gradients though computation graph
-      optimizer.step() # modify model parameters
+      # compute gradients though computation graph
+      loss.backward() 
+      # performs a single optimization step
+      optimizer.step()
       total_loss += loss.item()
       num += 1
     print(f"[Epoch {1+epoch}]\nTraining loss {total_loss / num}")
