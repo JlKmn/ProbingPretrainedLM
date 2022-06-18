@@ -64,5 +64,5 @@ def tokenize(sentences, labels):
     sentences_ids, taggings_ids = convert_to_ids(bert_tokenized_sentences, aligned_taggings)
     debug_print(sentences_ids[42])
     debug_print(taggings_ids[42])
-    debug_print('num labels:', len(label_vocab))
+    debug_print(f'num labels: {len(label_vocab)}')
     return sentences_ids, taggings_ids
