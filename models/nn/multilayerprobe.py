@@ -10,10 +10,9 @@ class MultilayerProbeBert(nn.Module):
     super().__init__()
     self.bert = AutoModel.from_pretrained('bert-base-cased')
     self.layers = nn.Sequential(
-      nn.Flatten(),
-      nn.Linear(32 * 32 * 3, 64),
+      nn.Linear(self.bert.config.hidden_size, 64),
       nn.ReLU(),
-      nn.Linear(64, 32),
+      nn.Linear(64, self.bert.config.hidden_size),
       nn.ReLU(),
       nn.Linear(self.bert.config.hidden_size, num_labels)
     )
