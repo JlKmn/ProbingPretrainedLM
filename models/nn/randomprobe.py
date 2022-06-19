@@ -9,9 +9,6 @@ class LinearProbeRandom(nn.Module):
     self.embedding = nn.Embedding(tokenizer.vocab_size, 768)
     self.probe = nn.Linear(768, num_labels)
     self.to(device)
-
-  def parameters(self):
-    return self.probe.parameters()
   
   def forward(self, sentences):
     # Embedding layer needs no back propagation

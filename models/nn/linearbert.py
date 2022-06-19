@@ -10,9 +10,6 @@ class LinearBert(nn.Module):
     self.probe = nn.Linear(self.bert.config.hidden_size, num_labels)
     self.to(device)
 
-  def parameters(self):
-    return self.probe.parameters()
-  
   def forward(self, sentences):
     word_rep, sentence_rep = self.bert(sentences, return_dict=False)
     return self.probe(word_rep)
