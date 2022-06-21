@@ -12,7 +12,7 @@ class ProbeResettedBert(nn.Module):
     super().__init__()
     self.bert = AutoModel.from_pretrained('bert-base-cased')
     self.probe = nn.Linear(self.bert.config.hidden_size, num_labels)
-    self.apply(weight_reset)
+    self.bert.apply(weight_reset)
     self.to(device)
 
   def forward(self, sentences):

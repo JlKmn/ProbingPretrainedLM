@@ -5,3 +5,4 @@ mlenv
 datasets
 out
 old
+wandb
