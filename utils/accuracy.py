@@ -1,14 +1,17 @@
 import torch
 import torch.nn as nn
 from itertools import islice
+
+import wandb
+
 from globals import label_vocab
 
-def perf(model, loader, batches):
+def perf(model, loader, dataset="eval"):
   criterion = nn.CrossEntropyLoss()
   # sets the model to evaluation mode
   model.eval()
   total_loss = correct = num_loss = num_perf = 0
-  for x, y in islice(loader, 0, batches):
+  for x, y in loader:
     # disable gradient calculation
     with torch.no_grad():
       # perform inference and compute loss
@@ -28,4 +31,7 @@ def perf(model, loader, batches):
       # compute number of correct predictions
       correct += torch.sum((y_pred == y) * mask)
       num_perf += torch.sum(mask).item()
-  return total_loss / num_loss, correct.item() / num_perf
+      l, a = total_loss / num_loss, correct.item() / num_perf 
+      wandb.log({f"{model.__class__.__name__}_{dataset}_loss": l, f"{model.__class__.__name__}_{dataset}_accuracy": a})
+
+  return total_loss / num_loss, correct.item() / num_perf 
