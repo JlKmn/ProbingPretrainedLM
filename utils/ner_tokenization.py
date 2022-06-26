@@ -50,7 +50,7 @@ def convert_to_ids(sentences, taggings):
     # sentence_tensor = [  101,  2586,   118,   163, 19853,   131,  1237,  2088, ...]
     sentence_tensor = torch.tensor(tokenizer.convert_tokens_to_ids(['[CLS]'] + sentence + ['SEP'])).long()
     # tagging_tensor = [ 0,  1,  2,  0,  1,  3,  4,  5,  6,  0,  0,  1,  1,  1, ...]
-    tagging_tensor = torch.tensor([0] + [label_vocab[tag] for tag in tagging] + [0]).long()
+    tagging_tensor = torch.tensor([9] + [int(tag) if tag != '<pad>' else 9 for tag in tagging] + [9]).long()
 
     sentences_ids.append(sentence_tensor.to(device))
     taggings_ids.append(tagging_tensor.to(device))
@@ -65,5 +65,4 @@ def tokenize(sentences, labels):
     sentences_ids, taggings_ids = convert_to_ids(bert_tokenized_sentences, aligned_taggings)
     debug_print(sentences_ids[0])
     debug_print(taggings_ids[0])
-    debug_print(f'num labels: {len(label_vocab)}')
     return sentences_ids, taggings_ids

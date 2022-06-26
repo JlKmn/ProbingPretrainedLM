@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader
 import torch.utils.data as data_utils
-from models.dataset.postagging import PosTaggingDataset
+from models.dataset.postagging import TaggingDataset
 from globals import *
 
 def collate_fn(items):
@@ -21,5 +21,5 @@ def collate_fn(items):
   return sentences, taggings
 
 def data_loader(sentences_ids, taggings_ids):
-    ds = PosTaggingDataset(sentences_ids, taggings_ids)
+    ds = TaggingDataset(sentences_ids, taggings_ids)
     return DataLoader(ds, batch_size=batch_size, collate_fn=collate_fn, shuffle=True)

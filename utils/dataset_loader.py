@@ -3,7 +3,7 @@ import urllib.request
 import conllu
 
 from globals import DATASET_DIR, debug_print
-
+from datasets import load_dataset
 
 def load_conllu(filename):
   with open(filename, encoding="utf-8") as fp:
@@ -21,3 +21,7 @@ def load(filename):
     sentences, labels = load_conllu(filePath)
     debug_print(list(zip(sentences[0], labels[0])))
     return sentences, labels
+
+def load_ner(data_type):
+  dataset = load_dataset("conll2003")
+  return dataset[data_type]["tokens"], dataset[data_type]["ner_tags"]

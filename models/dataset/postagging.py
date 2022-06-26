@@ -1,6 +1,6 @@
 from torch.utils.data import Dataset
 
-class PosTaggingDataset(Dataset):
+class TaggingDataset(Dataset):
   def __init__(self, sentences, taggings):
     assert len(sentences) == len(taggings)
     self.sentences = sentences
