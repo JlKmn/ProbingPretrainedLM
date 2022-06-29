@@ -1,3 +1,4 @@
+import os
 import wandb
 import fire
 from globals import *
@@ -10,6 +11,10 @@ def main(dataset, epochs = 1, lossrate = 1e-2, batchsize = 64):
     lr = lossrate
     batch_size = batchsize
     wandb.log({"epochs": EPOCHS, "lossrate": lr, "batch_size": batch_size, "dataset": dataset})
+
+    if not os.exists(DATASET_DIR):
+        os.mkdir(DATASET_DIR)
+
     if dataset == "pos":
         pos.go()
     elif dataset == "ner":
