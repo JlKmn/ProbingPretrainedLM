@@ -12,7 +12,7 @@ from utils.test import test
 from globals import *
 from utils.train import fit
 
-def go():
+def go(EPOCHS):
     train_sentences, train_labels = load(TRAIN_FILE)
     eval_sentences, eval_labels = load(EVAL_FILE)
     test_sentences, test_labels = load(TEST_FILE)

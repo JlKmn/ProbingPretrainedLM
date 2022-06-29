@@ -5,13 +5,13 @@ from models.nn.randomprobe import LinearProbeRandom
 from models.nn.resettedbert import ProbeResettedBert
 from utils.dataloader import data_loader
 from utils.dataset_loader import load_ner
-from globals import EPOCHS, debug_print, ner_label_length
+from globals import debug_print, ner_label_length
 from utils.helper import GetTotalWordCount
 from utils.ner_tokenization import tokenize
 from utils.train import ner_fit
 from utils.test import test_ner
 
-def go():
+def go(EPOCHS):
     train_sentences, train_labels = load_ner("train")
     eval_sentences, eval_labels = load_ner("validation")
     test_sentences, test_labels = load_ner("test")
