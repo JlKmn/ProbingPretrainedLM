@@ -12,7 +12,7 @@ def main(dataset, epochs = 1, lossrate = 1e-2, batchsize = 64):
     batch_size = batchsize
     wandb.log({"epochs": EPOCHS, "lossrate": lr, "batch_size": batch_size, "dataset": dataset})
 
-    if not os.exists(DATASET_DIR):
+    if not os.path.exists(DATASET_DIR):
         os.mkdir(DATASET_DIR)
 
     if dataset == "pos":
