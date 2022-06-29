@@ -32,7 +32,6 @@ def perf(model, loader, dataset="eval"):
       correct += torch.sum((y_pred == y) * mask)
       num_perf += torch.sum(mask).item()
       l, a = total_loss / num_loss, correct.item() / num_perf 
-      wandb.log({f"{model.__class__.__name__}_{dataset}_loss": l, f"{model.__class__.__name__}_{dataset}_accuracy": a})
 
   return total_loss / num_loss, correct.item() / num_perf 
 
