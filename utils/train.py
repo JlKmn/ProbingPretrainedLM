@@ -25,7 +25,7 @@ def fit(model, epochs, train_loader, eval_loader):
       optimizer.step()
       total_loss += loss.item()
       num += 1
-      wandb.log({f"{model.__class__.__name__}_train_loss": loss, f"{model.__class__.__name__}_epoch": epoch, f"{model.__class__.__name__}_progress": num / total_count})
+      wandb.log({f"{model.__class__.__name__}_train_loss": loss})
     print(f"[Epoch {1+epoch}]\nTraining loss {total_loss / num}")
     eval_loss, eval_accuracy = perf(model, eval_loader)
     wandb.log({f"{model.__class__.__name__}_eval_loss": eval_loss, f"{model.__class__.__name__}_eval_accuracy": eval_accuracy, f"{model.__class__.__name__}_epoch": epoch})
