@@ -9,7 +9,7 @@ TRAIN_FILE = "en_ewt-ud-train.conllu"
 EVAL_FILE = "en_ewt-ud-dev.conllu"
 TEST_FILE = "en_ewt-ud-test.conllu"
 
-device = torch.device('cuda:3')
+device = torch.device(f"cuda:{input('What gpu number? ')}")
 tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
 
 label_vocab = collections.defaultdict(lambda: len(label_vocab))
