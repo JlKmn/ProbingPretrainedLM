@@ -4,9 +4,9 @@ from itertools import islice
 
 import wandb
 
-from globals import label_vocab
+from globals import label_vocab, ner_label_length
 
-def perf(model, loader, dataset="eval"):
+def perf(model, loader, epoch=1, dataset="eval"):
   criterion = nn.CrossEntropyLoss()
   # sets the model to evaluation mode
   model.eval()
@@ -33,21 +33,26 @@ def perf(model, loader, dataset="eval"):
       num_perf += torch.sum(mask).item()
       l, a = total_loss / num_loss, correct.item() / num_perf 
 
-  return total_loss / num_loss, correct.item() / num_perf 
+  eval_loss, eval_accuracy = total_loss / num_loss, correct.item() / num_perf
+  wandb.log({f"{model.__class__.__name__}_{dataset}_loss": eval_loss, f"{model.__class__.__name__}_{dataset}_accuracy": eval_accuracy, f"{model.__class__.__name__}_{dataset}_epoch": epoch})
 
-def ner_perf(model, loader, dataset="eval"):
+  return eval_loss, eval_accuracy
+
+# Precision: percentage of named entity guesses that are exact matches
+# Recall: Percentage of named entities found
+def ner_perf(model, loader, epoch = 1, dataset="eval"):
   # we calculate the F1 score to evaluate performance
   criterion = nn.CrossEntropyLoss()
   # sets the model to evaluation mode
   model.eval()
-  total_loss = notO_correct = num_loss = notO_performed = total_correct = total_performed = 0
+  total_loss = num_loss = precision_correct = precision_num = recalled = entity_num = 0
   for x, y in loader:
     # disable gradient calculation
     with torch.no_grad():
       # perform inference and compute loss
       y_scores = model(x)
       # requires tensors of shape (num-instances, num-labels) and (num-instances)
-      loss = criterion(y_scores.view(-1, len(label_vocab)), y.view(-1))
+      loss = criterion(y_scores.view(-1, ner_label_length), y.view(-1))
 
       # gather loss statistics
       total_loss += loss.item()
@@ -57,16 +62,19 @@ def ner_perf(model, loader, dataset="eval"):
       # compute highest-scoring tag
       y_pred = torch.max(y_scores, 2)[1]
       # ignore <pad> tags
-      if y != 9:
-        # compute number of correct predictions
-        mask = y != 0
-        notO_correct += torch.sum((y_pred == y) * mask)
-        notO_performed += torch.sum(mask).item()
-        total_correct += torch.sum(y_pred == y)
-        total_performed += torch.sum(1).item()
-        l, a, ta = total_loss / num_loss, notO_correct.item() / notO_performed, total_correct.item() / total_performed
-        wandb.log({f"{model.__class__.__name__}_{dataset}_loss": l,
-        f"{model.__class__.__name__}_{dataset}_non0_accuracy": a,
-        f"{model.__class__.__name__}_{dataset}_total_accuracy": ta})
+      for i, labels in enumerate(y):
+        for j, label in enumerate(labels):
+          if y_pred[i][j] != 0 and y_pred[i][j] != 9:
+            precision_num += 1
+            if y_pred[i][j] == label:
+              precision_correct += 1
 
-  return total_loss / num_loss, notO_correct.item() / notO_performed, total_correct.item() / total_performed
+          if label != 9 and label != 0:
+            entity_num += 1
+            if y_pred[i][j] != 0 and y_pred[i][j] != 9:
+              recalled += 1
+
+  eval_loss, eval_precision, eval_recall = total_loss / num_loss, precision_correct / precision_num, recalled / entity_num 
+  wandb.log({f"{model.__class__.__name__}_{dataset}_loss": eval_loss, f"{model.__class__.__name__}_{dataset}_precision": eval_precision, f"{model.__class__.__name__}_{dataset}_recall": eval_recall, f"{model.__class__.__name__}_{dataset}_epoch": epoch})
+
+  return eval_loss, eval_precision, eval_recall

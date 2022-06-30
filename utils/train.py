@@ -28,7 +28,6 @@ def fit(model, epochs, train_loader, eval_loader):
       wandb.log({f"{model.__class__.__name__}_train_loss": loss})
     print(f"[Epoch {1+epoch}]\nTraining loss {total_loss / num}")
     eval_loss, eval_accuracy = perf(model, eval_loader)
-    wandb.log({f"{model.__class__.__name__}_eval_loss": eval_loss, f"{model.__class__.__name__}_eval_accuracy": eval_accuracy, f"{model.__class__.__name__}_epoch": epoch})
     print(f"Eval loss {eval_loss} Eval accuracy {eval_accuracy}")
 
 def ner_fit(model, epochs, train_loader, eval_loader):
@@ -52,5 +51,5 @@ def ner_fit(model, epochs, train_loader, eval_loader):
       num += 1
       wandb.log({f"{model.__class__.__name__}_train_loss": loss, f"{model.__class__.__name__}_epoch": epoch, f"{model.__class__.__name__}_progress": num / total_count})
     print(f"[Epoch {1+epoch}]\nTraining loss {total_loss / num}")
-    eval_loss, eval_accuracy = ner_perf(model, eval_loader)
-    print(f"Eval loss {eval_loss} Eval accuracy {eval_accuracy}")
+    eval_loss, eval_precision, eval_recall = ner_perf(model, eval_loader)
+    print(f"Eval loss {eval_loss} Eval precision {eval_precision} Eval recall {eval_recall}")

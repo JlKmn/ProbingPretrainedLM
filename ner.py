@@ -1,8 +1,10 @@
+import wandb
 from models.nn.bertprobe import LinearProbeBert
 from models.nn.linearbert import LinearBert
 from models.nn.multilayerprobe import MultilayerProbeBert
 from models.nn.randomprobe import LinearProbeRandom
 from models.nn.resettedbert import ProbeResettedBert
+from utils.accuracy import ner_perf
 from utils.dataloader import data_loader
 from utils.dataset_loader import load_ner
 from globals import debug_print, ner_label_length
@@ -21,7 +23,6 @@ def go(EPOCHS):
     print("Eval dataset total words", GetTotalWordCount(eval_sentences))
     print("Test dataset sentences", len(test_sentences))
     print("Test dataset total words", GetTotalWordCount(test_sentences))
-
     
     train_sentences_ids, train_tagging_ids = tokenize(train_sentences, train_labels)
     eval_sentences_ids, eval_tagging_ids = tokenize(eval_sentences, eval_labels)
@@ -48,13 +49,13 @@ def go(EPOCHS):
     print("TRAINING MULTILAYER BERT PROBE")
     ner_fit(multilayer_probe_bert, EPOCHS, train_loader, eval_loader)
 
-    loss, non0_accuracy, total_accuracy = test_ner(linear_model, test_loader)
-    print(f"Random Test: Loss {loss} Non0-Accuracy {non0_accuracy} Total-Accuracy {total_accuracy}")
-    loss, non0_accuracy, total_accuracy = test_ner(bert_probe_model, test_loader)
-    print(f"Bert Probe Test: Loss {loss} Non0-Accuracy {non0_accuracy} Total-Accuracy {total_accuracy}")
-    loss, non0_accuracy, total_accuracy = test_ner(linear_bert_model, test_loader)
-    print(f"Full Bert Test: Loss {loss} Non0-Accuracy {non0_accuracy} Total-Accuracy {total_accuracy}")
-    loss, non0_accuracy, total_accuracy = test_ner(resetted_bert, test_loader)
-    print(f"Resetted Bert Test: Loss {loss} Non0-Accuracy {non0_accuracy} Total-Accuracy {total_accuracy}")
-    loss, non0_accuracy, total_accuracy = test_ner(multilayer_probe_bert, test_loader)
-    print(f"Multilayer Bert Probe Test: Loss {loss} Non0-Accuracy {non0_accuracy} Total-Accuracy {total_accuracy}")
+    eval_loss, eval_precision, eval_recall = test_ner(linear_model, test_loader)
+    print(f"Random Test: Loss {eval_loss} Precision {eval_precision} Recall {eval_recall}")
+    eval_loss, eval_precision, eval_recall = test_ner(bert_probe_model, test_loader)
+    print(f"Bert Probe Test: Loss {eval_loss} Precision {eval_precision} Recall {eval_recall}")
+    eval_loss, eval_precision, eval_recall = test_ner(linear_bert_model, test_loader)
+    print(f"Full Bert Test: Loss {eval_loss} Precision {eval_precision} Recall {eval_recall}")
+    eval_loss, eval_precision, eval_recall = test_ner(resetted_bert, test_loader)
+    print(f"Resetted Bert Test: Loss {eval_loss} Precision {eval_precision} Recall {eval_recall}")
+    eval_loss, eval_precision, eval_recall = test_ner(multilayer_probe_bert, test_loader)
+    print(f"Multilayer Bert Probe Test: Loss {eval_loss} Precision {eval_precision} Recall {eval_recall}")
