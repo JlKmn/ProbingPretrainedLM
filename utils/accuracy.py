@@ -74,7 +74,10 @@ def ner_perf(model, loader, epoch = 1, dataset="eval"):
             if y_pred[i][j] != 0 and y_pred[i][j] != 9:
               recalled += 1
 
-  eval_loss, eval_precision, eval_recall = total_loss / num_loss, precision_correct / precision_num, recalled / entity_num 
+  eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_correct, precision_num), _division(recalled, entity_num)
   wandb.log({f"{model.__class__.__name__}_{dataset}_loss": eval_loss, f"{model.__class__.__name__}_{dataset}_precision": eval_precision, f"{model.__class__.__name__}_{dataset}_recall": eval_recall, f"{model.__class__.__name__}_{dataset}_epoch": epoch})
 
   return eval_loss, eval_precision, eval_recall
+
+def _division(n, d):
+    return n / d if d else 0

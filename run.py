@@ -5,7 +5,7 @@ import globals
 import pos
 import ner
 
-def main(dataset = "pos", epochs = 2):
+def main(dataset = "ner", epochs = 2):
     wandb.log({"epochs": epochs, "lossrate": globals.lr, "batch_size": globals.batch_size, "dataset": dataset})
 
     if not os.path.exists(globals.DATASET_DIR):
