@@ -11,6 +11,5 @@ class LinearBert(nn.Module):
     self.to(device)
 
   def forward(self, sentences):
-    with torch.enable_grad:
-      word_rep, sentence_rep = self.bert(sentences, return_dict=False)
+    word_rep, sentence_rep = self.bert(sentences, return_dict=False)
     return self.probe(word_rep)
