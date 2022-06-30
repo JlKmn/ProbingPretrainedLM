@@ -15,6 +15,9 @@ def main(dataset = "ner", epochs = 2):
         pos.go(epochs)
     elif dataset == "ner":
         ner.go(epochs)
+    elif dataset == "all":
+        pos.go(epochs)
+        ner.go(epochs)
 
 if __name__ == '__main__':
     wandb.init(project="probing")
