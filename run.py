@@ -17,6 +17,7 @@ class RunParameters():
         self.model = model
 
 def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64):
+    wandb.init(project="probing")
     params = RunParameters(epochs, lr, batch_size, model)
     wandb.log({"epochs": params.epochs, "lossrate": params.lr, "batch_size": params.batch_size, "dataset": dataset})
 
@@ -38,5 +39,4 @@ LINEARBERT = 3
 PROBERESETTEDBERT = 4
 MULTILAYERPROBEBERT = 5"""
     print(models)
-    wandb.init(project="probing")
     fire.Fire(main)
