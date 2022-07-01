@@ -65,7 +65,6 @@ def ner_perf(model, loader, epoch = 1, dataset="eval"):
             precision_num += 1
             if y_pred[i][j] == label:
               precision_correct += 1
-
           # Recall: Percentage of named entities found
           if is_entity(label):
             entity_num += 1

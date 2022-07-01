@@ -1,7 +1,7 @@
 import re
 import torch
 from transformers import AutoTokenizer
-from globals import *
+from globals import tokenizer, debug_print, label_vocab, device
 
 def align_to_bert_tokenization(sentences, labels):
     tokenized_sentences = []

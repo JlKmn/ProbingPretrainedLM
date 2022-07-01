@@ -1,24 +1,42 @@
 import os
+import torch
 import wandb
 import fire
 import globals
+from models import Models
 import pos
 import ner
 
-def main(dataset = "ner", epochs = 2):
-    wandb.log({"epochs": epochs, "lossrate": globals.lr, "batch_size": globals.batch_size, "dataset": dataset})
+
+
+class RunParameters():
+    def __init__(self, epochs, lr, batch_size, model):
+        self.epochs = epochs
+        self.lr = lr
+        self.batch_size = batch_size
+        self.model = model
+
+def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64):
+    params = RunParameters(epochs, lr, batch_size, model)
+    wandb.log({"epochs": params.epochs, "lossrate": params.lr, "batch_size": params.batch_size, "dataset": dataset})
 
     if not os.path.exists(globals.DATASET_DIR):
         os.mkdir(globals.DATASET_DIR)
 
     if dataset == "pos":
-        pos.go(epochs)
+        pos.go(params)
     elif dataset == "ner":
-        ner.go(epochs)
+        ner.go(params)
     elif dataset == "all":
-        pos.go(epochs)
-        ner.go(epochs)
+        pos.go(params)
+        ner.go(params)
 
 if __name__ == '__main__':
+    models = """LINEARPROBEBERT = 1
+LINEARPROBERANDOM = 2
+LINEARBERT = 3
+PROBERESETTEDBERT = 4
+MULTILAYERPROBEBERT = 5"""
+    print(models)
     wandb.init(project="probing")
     fire.Fire(main)

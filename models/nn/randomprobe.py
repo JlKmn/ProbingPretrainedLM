@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from globals import device, tokenizer
+from globals import tokenizer, device
 
 class LinearProbeRandom(nn.Module):
   def __init__(self, num_labels):

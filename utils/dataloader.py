@@ -1,7 +1,8 @@
+import torch
 from torch.utils.data import DataLoader
 import torch.utils.data as data_utils
 from models.dataset.postagging import TaggingDataset
-from globals import *
+from globals import device
 
 def collate_fn(items):
   # items = [(tensor([ 101, 7384, ...19,  100]), tensor([ 0,  1,  6, ..., 11,  0])), ...]
@@ -20,6 +21,6 @@ def collate_fn(items):
 
   return sentences, taggings
 
-def data_loader(sentences_ids, taggings_ids):
+def data_loader(sentences_ids, taggings_ids, batch_size):
     ds = TaggingDataset(sentences_ids, taggings_ids)
     return DataLoader(ds, batch_size=batch_size, collate_fn=collate_fn, shuffle=True)
