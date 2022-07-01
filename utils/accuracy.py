@@ -38,8 +38,6 @@ def perf(model, loader, epoch=1, dataset="eval"):
 
   return eval_loss, eval_accuracy
 
-# Precision: percentage of named entity guesses that are exact matches
-# Recall: Percentage of named entities found
 def ner_perf(model, loader, epoch = 1, dataset="eval"):
   # we calculate the F1 score to evaluate performance
   criterion = nn.CrossEntropyLoss()
@@ -58,20 +56,20 @@ def ner_perf(model, loader, epoch = 1, dataset="eval"):
       total_loss += loss.item()
       num_loss += 1
 
-      # gather accuracy statistics
-      # compute highest-scoring tag
       y_pred = torch.max(y_scores, 2)[1]
-      # ignore <pad> tags
+
       for i, labels in enumerate(y):
         for j, label in enumerate(labels):
-          if y_pred[i][j] != 0 and y_pred[i][j] != 9:
+          # Precision: percentage of named entity guesses that are exact matches
+          if is_entity(y_pred[i][j]):
             precision_num += 1
             if y_pred[i][j] == label:
               precision_correct += 1
 
-          if label != 9 and label != 0:
+          # Recall: Percentage of named entities found
+          if is_entity(label):
             entity_num += 1
-            if y_pred[i][j] != 0 and y_pred[i][j] != 9:
+            if is_entity(y_pred[i][j]):
               recalled += 1
 
   eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_correct, precision_num), _division(recalled, entity_num)
@@ -80,4 +78,8 @@ def ner_perf(model, loader, epoch = 1, dataset="eval"):
   return eval_loss, eval_precision, eval_recall
 
 def _division(n, d):
-    return n / d if d else 0
+  return n / d if d else 0
+
+def is_entity(y):
+  # 9 is a pad tag, 0 is a non-entity
+  return y != 9 and y != 0
