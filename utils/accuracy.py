@@ -34,7 +34,7 @@ def perf(model, loader, epoch=1, dataset="eval"):
       l, a = total_loss / num_loss, correct.item() / num_perf 
 
   eval_loss, eval_accuracy = total_loss / num_loss, correct.item() / num_perf
-  wandb.log({f"pos_{model.__class__.__name__}_{dataset}_loss": eval_loss, f"pos_{model.__class__.__name__}_{dataset}_accuracy": eval_accuracy, f"pos_{model.__class__.__name__}_{dataset}_epoch": epoch})
+  wandb.log({f"{dataset}_loss": eval_loss, f"{dataset}_accuracy": eval_accuracy, f"{dataset}_epoch": epoch})
 
   return eval_loss, eval_accuracy
 
@@ -72,7 +72,7 @@ def ner_perf(model, loader, epoch = 1, dataset="eval"):
               recalled += 1
 
   eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_correct, precision_num), _division(recalled, entity_num)
-  wandb.log({f"ner_{model.__class__.__name__}_{dataset}_loss": eval_loss, f"ner_{model.__class__.__name__}_{dataset}_precision": eval_precision, f"ner_{model.__class__.__name__}_{dataset}_recall": eval_recall, f"ner_{model.__class__.__name__}_{dataset}_epoch": epoch})
+  wandb.log({f"{dataset}_loss": eval_loss, f"{dataset}_precision": eval_precision, f"{dataset}_recall": eval_recall, f"{dataset}_epoch": epoch})
 
   return eval_loss, eval_precision, eval_recall
 
