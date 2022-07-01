@@ -12,7 +12,7 @@ from utils.test import test
 from globals import *
 from utils.train import fit
 
-from models import Models
+from models_enum import Models
 
 def go(params):
     train_sentences, train_labels = load(TRAIN_FILE)

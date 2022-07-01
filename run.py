@@ -3,7 +3,7 @@ import torch
 import wandb
 import fire
 import globals
-from models import Models
+from models_enum import Models
 import pos
 import ner
 

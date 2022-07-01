@@ -1,5 +1,5 @@
 import wandb
-from models import Models
+from models_enum import Models
 from models.nn.bertprobe import LinearProbeBert
 from models.nn.linearbert import LinearBert
 from models.nn.multilayerprobe import MultilayerProbeBert
