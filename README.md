@@ -7,5 +7,7 @@
 `source env/bin/activate`
 3. Install requirements\
 `pip install -r requirements.txt`
-4. Start training\
+4. Log into wandb\
+`wandb login`
+5. Start training\
 `python run.py --dataset pos --epochs 50`
