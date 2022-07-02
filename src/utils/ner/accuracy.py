@@ -101,8 +101,8 @@ def ner_spans(tensors : List[torch.tensor]) -> Set[Tuple[int, int, int]]:
 
 def recall(s_pred, s):
   tp = len(s.intersection(s_pred))
-  return tp / len(s)
+  return _division(tp, len(s))
 
 def precision(s_pred, s):
   tp = len(s.intersection(s_pred))
-  return tp / len(s_pred)
+  return _division(tp, len(s_pred))
