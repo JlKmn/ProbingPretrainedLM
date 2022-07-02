@@ -1,4 +1,4 @@
-![build](https://github.com/JlKmn/ProbingPretrainedLM/actions/workflows/ci.yml/badge.svg)
+![build](https://github.com/JlKmn/ProbingPretrainedLM/actions/workflows/ci.yml/badge.svg)\
 # Probing Pre-trained Language Models
 
 ## Getting started
