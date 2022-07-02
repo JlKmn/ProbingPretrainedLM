@@ -3,7 +3,7 @@ import torch
 import wandb
 import fire
 import globals
-from models_enum import Models
+from models.models_enum import Models
 import pos
 import ner
 
@@ -14,7 +14,7 @@ class RunParameters():
         self.batch_size = batch_size
         self.model = model
 
-def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64, project = "probing"):
+def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64, project = "probingtest"):
     model_name = Models.get_run_name(model)
     wandb.init(project=project, name=f"{dataset}_{model_name}")
     params = RunParameters(epochs, lr, batch_size, model)

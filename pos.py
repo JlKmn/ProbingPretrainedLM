@@ -4,15 +4,14 @@ from models.nn.linearbert import LinearBert
 from models.nn.multilayerprobe import MultilayerProbeBert
 from models.nn.randomprobe import LinearProbeRandom
 from models.nn.resettedbert import ProbeResettedBert
-from utils.dataset_loader import load
+from utils.pos.dataset_loader import load
 from utils.helper import GetTotalWordCount
-from utils.tokenization import tokenize
-from utils.dataloader import data_loader
-from utils.test import test
+from utils.shared.tokenization import tokenize
+from utils.shared.dataloader import data_loader
+from utils.pos.test import test
+from utils.pos.train import fit
 from globals import *
-from utils.train import fit
-
-from models_enum import Models
+from models.models_enum import Models
 
 def go(params):
     train_sentences, train_labels = load(TRAIN_FILE)
