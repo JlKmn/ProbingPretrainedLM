@@ -10,7 +10,7 @@ def perf(model, loader, epoch = 1, dataset="eval"):
   criterion = nn.CrossEntropyLoss()
   # sets the model to evaluation mode
   model.eval()
-  total_loss = num_loss = precision_correct = precision_num = recalled = entity_num = 0
+  total_loss = num_loss = precision_sum = recall_sum = iterations = 0
   for x, y in loader:
     # disable gradient calculation
     with torch.no_grad():
@@ -26,19 +26,27 @@ def perf(model, loader, epoch = 1, dataset="eval"):
       y_pred = torch.max(y_scores, 2)[1]
 
       for i, labels in enumerate(y):
-        for j, label in enumerate(labels):
-          # Precision: percentage of named entity guesses that are exact matches
-          if is_entity(y_pred[i][j]):
-            precision_num += 1
-            if y_pred[i][j] == label:
-              precision_correct += 1
-          # Recall: Percentage of named entities found
-          if is_entity(label):
-            entity_num += 1
-            if is_entity(y_pred[i][j]):
-              recalled += 1
+        s = ner_spans(labels)
+        s_pred = ner_spans(y_pred[i])
 
-  eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_correct, precision_num), _division(recalled, entity_num)
+        recall_sum += recall(s_pred, s)
+        precision_sum += precision(s_pred, s)
+        
+        iterations += 1
+
+        # for j, label in enumerate(labels):
+        #   # Precision: percentage of named entity guesses that are exact matches
+        #   if is_entity(y_pred[i][j]):
+        #     precision_num += 1
+        #     if y_pred[i][j] == label:
+        #       precision_correct += 1
+        #   # Recall: Percentage of named entities found
+        #   if is_entity(label):
+        #     entity_num += 1
+        #     if is_entity(y_pred[i][j]):
+        #       recalled += 1
+
+  eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_sum, iterations), _division(recall_sum, iterations)
   wandb.log({f"{dataset}_loss": eval_loss, f"{dataset}_precision": eval_precision, f"{dataset}_recall": eval_recall, f"{dataset}_epoch": epoch})
 
   return eval_loss, eval_precision, eval_recall
@@ -55,7 +63,7 @@ def is_zero(y):
 def is_entity(y):
   return not is_padding(y) and not is_zero(y)
 
-def ner_spans(tensors : List[torch.tensor]) -> Set[Tuple[int, int, torch.tensor]]:
+def ner_spans(tensors : List[torch.tensor]) -> Set[Tuple[int, int, int]]:
   res = set()
   start = -1
   paddingstart = -1
