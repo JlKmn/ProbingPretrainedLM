@@ -2,3 +2,4 @@ conllu==4.4.2
 fire==0.4.0
 torch==1.11.0
 transformers==4.19.2
+wandb==0.12.18
