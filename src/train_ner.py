@@ -31,9 +31,6 @@ def go(params):
     eval_loader = data_loader(eval_sentences_ids, eval_tagging_ids, params.batch_size)
     test_loader = data_loader(test_sentences_ids, test_tagging_ids, params.batch_size)
 
-    bert_probe_model = LinearProbeBert(ner_label_length)
-    eval_loss, eval_precision, eval_recall = test(bert_probe_model, test_loader)
-
     if params.model == Models.LPB.value:
         bert_probe_model = LinearProbeBert(ner_label_length)
         print("TRAINING BERT PROBE")
