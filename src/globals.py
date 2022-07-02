@@ -10,7 +10,7 @@ EVAL_FILE = "en_ewt-ud-dev.conllu"
 TEST_FILE = "en_ewt-ud-test.conllu"
 
 tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
-device = torch.device(input("What gpu device? "))
+device = torch.device("cpu")#torch.device(input("What gpu device? "))
 label_vocab = collections.defaultdict(lambda: len(label_vocab))
 
 # notice that all beginning entities have an odd index

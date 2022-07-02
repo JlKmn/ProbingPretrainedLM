@@ -4,7 +4,7 @@ from itertools import islice
 
 import wandb
 
-from globals import label_vocab, ner_label_length
+from src.globals import label_vocab, ner_label_length
 
 def perf(model, loader, epoch=1, dataset="eval"):
   criterion = nn.CrossEntropyLoss()

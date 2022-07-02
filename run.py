@@ -2,10 +2,10 @@ import os
 import torch
 import wandb
 import fire
-import globals
-from models.models_enum import Models
-import pos
-import ner
+import src.globals as globals
+from src.models.models_enum import Models
+import src.train_pos as train_pos
+import src.train_ner as train_ner
 
 class RunParameters():
     def __init__(self, epochs, lr, batch_size, model):
@@ -14,7 +14,7 @@ class RunParameters():
         self.batch_size = batch_size
         self.model = model
 
-def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64, project = "probingtest"):
+def main(model = 1, dataset = "ner", epochs = 2, lr = 1e-2, batch_size = 64, project = "probingtest"):
     model_name = Models.get_run_name(model)
     wandb.init(project=project, name=f"{dataset}_{model_name}")
     params = RunParameters(epochs, lr, batch_size, model)
@@ -24,15 +24,15 @@ def main(model = 1, dataset = "pos", epochs = 2, lr = 1e-2, batch_size = 64, pro
         os.mkdir(globals.DATASET_DIR)
 
     if dataset == "pos":
-        pos.go(params)
+        train_pos.go(params)
     elif dataset == "ner":
-        ner.go(params)
+        train_ner.go(params)
     elif dataset == "all":
-        pos.go(params)
-        ner.go(params)
+        train_pos.go(params)
+        train_ner.go(params)
 
 if __name__ == '__main__':
-    models = """LINEARPROBEBERT = 1
+    models = """--model (int)\nLINEARPROBEBERT = 1
 LINEARPROBERANDOM = 2
 LINEARBERT = 3
 PROBERESETTEDBERT = 4

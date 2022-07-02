@@ -1,7 +1,7 @@
 from transformers import AutoModel
 import torch
 import torch.nn as nn
-from globals import device
+from src.globals import device
 
 class LinearBert(nn.Module):
   def __init__(self, num_labels):

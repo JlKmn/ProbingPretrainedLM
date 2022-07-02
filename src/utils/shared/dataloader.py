@@ -1,8 +1,8 @@
 import torch
 from torch.utils.data import DataLoader
 import torch.utils.data as data_utils
-from models.dataset.postagging import TaggingDataset
-from globals import device
+from src.models.dataset.postagging import TaggingDataset
+from src.globals import device
 
 def collate_fn(items):
   # items = [(tensor([ 101, 7384, ...19,  100]), tensor([ 0,  1,  6, ..., 11,  0])), ...]

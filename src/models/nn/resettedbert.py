@@ -1,7 +1,7 @@
 from transformers import AutoModel
 import torch
 import torch.nn as nn
-from globals import device
+from src.globals import device
 
 def weight_reset(m):
     if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):

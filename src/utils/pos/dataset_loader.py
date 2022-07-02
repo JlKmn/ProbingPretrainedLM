@@ -2,7 +2,7 @@ import os
 import urllib.request
 import conllu
 
-from globals import DATASET_DIR, debug_print
+from src.globals import DATASET_DIR, debug_print
 
 def load_conllu(filename):
   with open(filename, encoding="utf-8") as fp:
