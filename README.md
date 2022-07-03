@@ -2,6 +2,8 @@
 # Probing Pre-trained Language Models
 
 ## Getting started
+1. Clone the repo\
+`git clone https://github.com/JlKmn/ProbingPretrainedLM.git`
 1. Create virtualenv\
 `python -m venv env`
 2. Activate virtualenv\
