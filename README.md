@@ -15,3 +15,10 @@ Assuming Linux / Git Bash
 `wandb login`
 5. Start training\
 `python run.py --model 1 --dataset pos --epochs 5`
+
+## Results
+### POS
+![accuracy](https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png)
+### NER
+![recall](https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_recall.png)
+![precision](https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_precision.png)
