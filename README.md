@@ -17,6 +17,13 @@ Assuming Linux / Git Bash
 `python run.py --model 1 --dataset pos --epochs 5`
 
 ## Results
+Training Hyperparameters 
+| Epochs  | Batch size | Loss rate |
+| ------------- | ------------- | ------------- |
+| 50  | 64  | 0.01 |
+
+The LinearBert model is an exception and was trained with an initial loss rate of 0.0001
+
 ### POS
 <a href="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png" width="600" ></a>
 
