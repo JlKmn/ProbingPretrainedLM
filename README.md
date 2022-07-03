@@ -2,6 +2,7 @@
 # Probing Pre-trained Language Models
 
 ## Getting started
+Assuming Linux / Git Bash
 1. Clone the repo\
 `git clone https://github.com/JlKmn/ProbingPretrainedLM.git && cd ProbingPretrainedLM`
 1. Create virtualenv\
