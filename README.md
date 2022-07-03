@@ -17,7 +17,7 @@ Assuming Linux / Git Bash
 `python run.py --model 1 --dataset pos --epochs 5`
 
 ## Results
-Training Hyperparameters 
+### Training Hyperparameters 
 | Epochs  | Batch size | Loss rate |
 | ------------- | ------------- | ------------- |
 | 50  | 64  | 0.01 |
