@@ -11,4 +11,4 @@
 4. Log into wandb\
 `wandb login`
 5. Start training\
-`python run.py --dataset pos --epochs 50`
+`python run.py --model 1 --dataset pos --epochs 5`
