@@ -14,7 +14,7 @@ class RunParameters():
         self.batch_size = batch_size
         self.model = model
 
-def main(model = 1, dataset = "ner", epochs = 2, lr = 1e-2, batch_size = 64, project = "probingtest"):
+def main(model = 1, dataset = "ner", epochs = 2, lr = 1e-2, batch_size = 64, project = "probing"):
     model_name = Models.get_run_name(model)
     wandb.init(project=project, name=f"{dataset}_{model_name}")
     params = RunParameters(epochs, lr, batch_size, model)
@@ -26,9 +26,6 @@ def main(model = 1, dataset = "ner", epochs = 2, lr = 1e-2, batch_size = 64, pro
     if dataset == "pos":
         train_pos.go(params)
     elif dataset == "ner":
-        train_ner.go(params)
-    elif dataset == "all":
-        train_pos.go(params)
         train_ner.go(params)
 
 if __name__ == '__main__':
