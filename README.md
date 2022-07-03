@@ -18,8 +18,8 @@ Assuming Linux / Git Bash
 
 ## Results
 ### POS
-<a href="url"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png" width="600" ></a>
+<a href="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/pos_accuracy.png" width="600" ></a>
 
 ### NER
-<a href="url"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_recall.png" width="600" ></a>
-<a href="url"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_precision.png" width="600" ></a>
+<a href="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_recall.png"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_recall.png" width="600" ></a>
+<a href="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_precision.png"><img src="https://raw.githubusercontent.com/JlKmn/ProbingPretrainedLM/main/results/ner_precision.png" width="600" ></a>
