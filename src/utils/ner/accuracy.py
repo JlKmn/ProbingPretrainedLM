@@ -11,6 +11,7 @@ def perf(model, loader, epoch = 1, dataset="eval"):
   # sets the model to evaluation mode
   model.eval()
   total_loss = num_loss = precision_sum = recall_sum = iterations = 0
+  first = True
   for x, y in loader:
     # disable gradient calculation
     with torch.no_grad():
@@ -33,6 +34,15 @@ def perf(model, loader, epoch = 1, dataset="eval"):
         precision_sum += precision(s_pred, s)
         
         iterations += 1
+
+        if first:
+          print(labels)
+          print(s)
+          print(y_pred[i])
+          print(s_pred)
+          print(f"Recall: {recall_sum}")
+          print(f"Precision: {precision_sum}")
+          first = False
 
         # for j, label in enumerate(labels):
         #   # Precision: percentage of named entity guesses that are exact matches
