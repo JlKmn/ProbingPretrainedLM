@@ -1,6 +1,6 @@
 ![build](https://github.com/JlKmn/ProbingPretrainedLM/actions/workflows/ci.yml/badge.svg)
 # Probing Pre-trained Language Models
-
+Àims to ascertain what linguistic information is captured by Bert encoded representations
 ## Getting started
 Assuming Linux / Git Bash
 1. Clone the repo\
