@@ -1,4 +1,3 @@
-import sys
 import re
 import torch
 from transformers import AutoTokenizer
@@ -68,5 +67,4 @@ def tokenize(sentences, labels):
     debug_print(f"Tensor Sentence {sentences_ids[index]}")
     debug_print(f"Tagging Ids {taggings_ids[index]}")
     debug_print(f'num labels: {len(label_vocab)}')
-    sys.exit(0)
     return sentences_ids, taggings_ids
