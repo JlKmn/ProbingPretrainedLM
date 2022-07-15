@@ -1,7 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
 import torch.utils.data as data_utils
-from src.models.dataset.postagging import TaggingDataset
+from src.models.dataset.tagging_dataset import TaggingDataset
 from src.globals import device
 
 def collate_fn(items):

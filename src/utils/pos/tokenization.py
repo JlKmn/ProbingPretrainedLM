@@ -1,3 +1,4 @@
+import sys
 import re
 import torch
 from transformers import AutoTokenizer
@@ -57,13 +58,15 @@ def convert_to_ids(sentences, taggings):
   return sentences_ids, taggings_ids
 
 def tokenize(sentences, labels):
+    index = 44
+    debug_print(f"Sentence {sentences[index]}")
+    debug_print(f"Labels {labels[index]}")
     bert_tokenized_sentences, aligned_taggings = align_to_bert_tokenization(sentences, labels)
-    debug_print(sentences[0])
-    debug_print(labels[0])
-    debug_print(bert_tokenized_sentences[0])
-    debug_print(aligned_taggings[0])
+    debug_print(f"Tokenized Sentence {bert_tokenized_sentences[index]}")
+    debug_print(f"Aligned Labels {aligned_taggings[index]}")
     sentences_ids, taggings_ids = convert_to_ids(bert_tokenized_sentences, aligned_taggings)
-    debug_print(sentences_ids[0])
-    debug_print(taggings_ids[0])
+    debug_print(f"Tensor Sentence {sentences_ids[index]}")
+    debug_print(f"Tagging Ids {taggings_ids[index]}")
     debug_print(f'num labels: {len(label_vocab)}')
+    sys.exit(0)
     return sentences_ids, taggings_ids
