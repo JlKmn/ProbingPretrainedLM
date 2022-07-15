@@ -1,6 +1,6 @@
 ![build](https://github.com/JlKmn/ProbingPretrainedLM/actions/workflows/ci.yml/badge.svg)
 # Probing Pre-trained Language Models
-
+Aims to ascertain what linguistic information is captured by Bert encoded representations
 ## Getting started
 Assuming Linux / Git Bash
 1. Clone the repo\
@@ -17,7 +17,7 @@ Assuming Linux / Git Bash
 `python run.py --model 1 --dataset pos --epochs 5`
 
 ## Results
-Training Hyperparameters 
+### Training Hyperparameters 
 | Epochs  | Batch size | Loss rate |
 | ------------- | ------------- | ------------- |
 | 50  | 64  | 0.01 |
