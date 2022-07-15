@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import wandb
 
-from src.globals import ner_label_length
+from src.globals import debug_print, ner_label_length
 
 def perf(model, loader, epoch = 1, dataset="eval"):
   # we calculate the F1 score to evaluate performance
@@ -36,25 +36,13 @@ def perf(model, loader, epoch = 1, dataset="eval"):
         iterations += 1
 
         if first:
-          print(labels)
-          print(s)
-          print(y_pred[i])
-          print(s_pred)
-          print(f"Recall: {recall_sum}")
-          print(f"Precision: {precision_sum}")
+          debug_print(labels)
+          debug_print(s)
+          debug_print(y_pred[i])
+          debug_print(s_pred)
+          debug_print(f"Recall: {recall_sum}")
+          debug_print(f"Precision: {precision_sum}")
           first = False
-
-        # for j, label in enumerate(labels):
-        #   # Precision: percentage of named entity guesses that are exact matches
-        #   if is_entity(y_pred[i][j]):
-        #     precision_num += 1
-        #     if y_pred[i][j] == label:
-        #       precision_correct += 1
-        #   # Recall: Percentage of named entities found
-        #   if is_entity(label):
-        #     entity_num += 1
-        #     if is_entity(y_pred[i][j]):
-        #       recalled += 1
 
   eval_loss, eval_precision, eval_recall = total_loss / num_loss, _division(precision_sum, iterations), _division(recall_sum, iterations)
   wandb.log({f"{dataset}_loss": eval_loss, f"{dataset}_precision": eval_precision, f"{dataset}_recall": eval_recall, f"{dataset}_epoch": epoch})
